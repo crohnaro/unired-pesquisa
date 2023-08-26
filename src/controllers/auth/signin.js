@@ -6,6 +6,8 @@ const post = async (req, res) =>{
     const {
         email,
         password,
+        idade,
+        genero,
     } = req.body
 
     await dbConnect()
@@ -23,6 +25,8 @@ const post = async (req, res) =>{
             _id: user._id,
             name: user.name,
             email: user.email,
+            idade: user.idade,
+            genero: user.genero,
         })
     }
 
