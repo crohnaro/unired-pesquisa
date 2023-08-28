@@ -15,6 +15,7 @@ const Home = () => {
           callbackUrl: "/auth/signin"
         })
       }}>Sair</Button>
+      <h1>Teste</h1>
     </>
   )
 }
