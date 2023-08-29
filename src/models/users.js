@@ -17,6 +17,14 @@ const schema = new mongoose.Schema({
     type: Number,
     required: [true, 'O campo "idade" é obrigatório.'],
   },
+  gender: {
+    type: String,
+    required: [true, 'O campo "gênero" é obrigatório.'],
+  },
+  course: {
+    type: String,
+    required: [true, 'O campo "curso" é obrigatório.'],
+  }
 });
 
 export default mongoose.models.users || mongoose.model("users", schema);
