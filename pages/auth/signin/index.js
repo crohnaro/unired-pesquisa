@@ -116,7 +116,7 @@ const handleAuthentication = async (values) => {
 };
 
 export default function JoySignInSideTemplate() {
-    const [logoMode, setLogoMode] = React.useState("light")
+    const [logoMode, setLogoMode] = React.useState("dark")
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange theme={theme}>
       <CssBaseline />
@@ -259,7 +259,7 @@ export default function JoySignInSideTemplate() {
                       required
                       error={errors.password && touched.password}
                     >
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Senha</FormLabel>
                       <Input
                         type="password"
                         name="password"
@@ -276,7 +276,7 @@ export default function JoySignInSideTemplate() {
                     >
                       <Link
                         fontSize="sm"
-                        href="#replace-with-a-link"
+                        href="/auth/signup"
                         fontWeight="lg"
                       >
                         Ainda não tem conta? Registre-se!
