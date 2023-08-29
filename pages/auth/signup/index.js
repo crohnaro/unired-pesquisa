@@ -104,7 +104,13 @@ function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
 export default function Signup() {
   const router = useRouter();
   const { setToasty } = useToasty();
+
+  
   const handleFormSubmit = async (values) => {
+
+    values.course = values.course.toUpperCase();
+    values.gender = values.gender.toUpperCase();
+    
     const response = await axios.post("/api/users", values);
 
     if (response.data.success) {
@@ -287,22 +293,31 @@ export default function Signup() {
                       />
                     </FormControl>
 
-                    <FormControl required error={errors.gender && touched.gender}>
-                      <FormLabel>Gênero</FormLabel>
-                      <Select name="gender" required >
-                        <Option value="Masculino">Masculino</Option>
-                        <Option value="Feminino">Feminino</Option>
-                      </Select>
+                    <FormControl
+                      required
+                      error={errors.gender && touched.gender}
+                    >
+                      <FormLabel>Genero</FormLabel>
+                      <Input
+                        type="gender"
+                        name="gender"
+                        value={values.gender}
+                        onChange={handleChange}
+                      />
                     </FormControl>
 
-                    <FormControl required error={errors.course && touched.course}>
+                    <FormControl
+                      required
+                      error={errors.course && touched.course}
+                    >
                       <FormLabel>Curso</FormLabel>
-                      <Select name="course" required >
-                        <Option value="Sistemas de Informação">Sistemas de Informação</Option>
-                        <Option value="Enfermagem">Enfermagem</Option>
-                      </Select>
+                      <Input
+                        type="course"
+                        name="course"
+                        value={values.course}
+                        onChange={handleChange}
+                      />
                     </FormControl>
-                    
 
                     <Box
                       sx={{
