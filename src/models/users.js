@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
+  matricula: {
+    type: String,
+    required: [true, 'O campo "matrícula" é obrigatório.'],
+  },
   name: {
     type: String,
     required: [true, 'O campo "nome" é obrigatório.'],
@@ -17,7 +21,7 @@ const schema = new mongoose.Schema({
     type: Number,
     required: [true, 'O campo "idade" é obrigatório.'],
   },
-  gender: {
+  genero: {
     type: String,
     required: [true, 'O campo "gênero" é obrigatório.'],
   },
