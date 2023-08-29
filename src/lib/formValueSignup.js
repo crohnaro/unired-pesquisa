@@ -6,6 +6,8 @@ const initialValues = {
   passwordConf: "",
   genero: "",
   idade: "",
+  gender: "",
+  course: "",
 };
 
 const validationSchema = yup.object().shape({
@@ -22,6 +24,8 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "As senhas precisam ser iguais")
     .required("Campo obrigatório"),
   idade: yup.number().positive().integer().required("Campo obrigatório"),
+  gender: yup.string().required("Campo obrigatório"),
+  course: yup.string().required("Campo obrigatório"),
 });
 
 export { initialValues, validationSchema };

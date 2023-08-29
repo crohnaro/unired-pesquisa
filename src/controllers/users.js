@@ -9,14 +9,16 @@ const get = async (req, res) => {
 };
 
 const post = async (req, res) => {
-  const { name, email, password, idade, } = req.body;
+  const { name, email, password, idade, gender, course } = req.body;
 
   await dbConnect();
   const passwordCrypto = await crypto(password);
   const user = new UsersModel({
     name,
     email,
-    idade, 
+    idade,
+    gender,
+    course, 
     password: passwordCrypto,
   });
 
