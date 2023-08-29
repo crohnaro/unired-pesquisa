@@ -26,11 +26,10 @@ import logoblk from "../../../public/logo black.png";
 import SendIcon from "@mui/icons-material/Send";
 
 import { useRouter } from "next/router";
-import { Formik } from "formik";
+import { Formik, validateYupSchema } from "formik";
 import axios from "axios";
 import { initialValues, validationSchema } from "@/src/lib/formValueSignup";
-import  useToasty  from '../../../src/contexts/Toasty'
-import { MenuItem } from "@mui/joy";
+import useToasty from "../../../src/contexts/Toasty";
 
 const theme = extendTheme({
   colorSchemes: {
@@ -107,14 +106,14 @@ export default function Signup() {
   const { setToasty } = useToasty();
   const handleFormSubmit = async (values) => {
     const response = await axios.post("/api/users", values);
-  
+
     if (response.data.success) {
       setToasty({
         open: true,
         seveity: "success",
         text: "Cadastro realizado com sucesso!",
       });
-  
+
       router.push("/auth/signin");
     }
   };
@@ -277,7 +276,7 @@ export default function Signup() {
                         onChange={handleChange}
                       />
                     </FormControl>
-                    
+
                     <FormControl required error={errors.idade && touched.idade}>
                       <FormLabel>Idade</FormLabel>
                       <Input
@@ -288,6 +287,23 @@ export default function Signup() {
                       />
                     </FormControl>
 
+                    <FormControl required error={errors.gender && touched.gender}>
+                      <FormLabel>Gênero</FormLabel>
+                      <Select name="gender" required >
+                        <Option value="Masculino">Masculino</Option>
+                        <Option value="Feminino">Feminino</Option>
+                      </Select>
+                    </FormControl>
+
+                    <FormControl required error={errors.course && touched.course}>
+                      <FormLabel>Curso</FormLabel>
+                      <Select name="course" required >
+                        <Option value="Sistemas de Informação">Sistemas de Informação</Option>
+                        <Option value="Enfermagem">Enfermagem</Option>
+                      </Select>
+                    </FormControl>
+                    
+
                     <Box
                       sx={{
                         display: "flex",
@@ -295,11 +311,7 @@ export default function Signup() {
                         alignItems: "center",
                       }}
                     >
-                      <Link
-                        fontSize="sm"
-                        href="/auth/signin"
-                        fontWeight="lg"
-                      >
+                      <Link fontSize="sm" href="/auth/signin" fontWeight="lg">
                         Ja tem Conta? Entre!
                       </Link>
                     </Box>
