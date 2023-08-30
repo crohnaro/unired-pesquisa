@@ -6,7 +6,7 @@ import CssBaseline from "@mui/joy/CssBaseline";
 
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
-import FormControl from "@mui/joy/FormControl";
+import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
 import IconButton from "@mui/joy/IconButton";
 import Link from "@mui/joy/Link";
@@ -105,14 +105,10 @@ export default function Signup() {
   const router = useRouter();
   const { setToasty } = useToasty();
 
-  
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async (formJson) => {
+    const response = await axios.post("/api/users", formJson);
 
-    values.course = values.course.toUpperCase();
-    values.gender = values.gender.toUpperCase();
-    
-    const response = await axios.post("/api/users", values);
-
+    console.log(formJson)
     if (response.data.success) {
       setToasty({
         open: true,
@@ -224,130 +220,101 @@ export default function Signup() {
                 Para realizar nossa pesquisa!
               </Typography>
             </div>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleFormSubmit}
-            >
-              {({
-                touched,
-                values,
-                errors,
-                handleChange,
-                handleSubmit,
-                isSubmitting,
-              }) => {
-                return (
-                  <form onSubmit={handleSubmit}>
-                    <FormControl required error={errors.name && touched.name}>
-                      <FormLabel>Nome</FormLabel>
-                      <Input
-                        type="name"
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl required error={errors.email && touched.email}>
-                      <FormLabel>Email</FormLabel>
-                      <Input
-                        type="email"
-                        name="email"
-                        value={values.email}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
 
-                    <FormControl
-                      required
-                      error={errors.password && touched.password}
-                    >
-                      <FormLabel>Senha</FormLabel>
-                      <Input
-                        type="password"
-                        name="password"
-                        value={values.password}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl
-                      required
-                      error={errors.passwordConf && touched.passwordConf}
-                    >
-                      <FormLabel>Confirmar Senha</FormLabel>
-                      <Input
-                        type="password"
-                        name="passwordConf"
-                        value={values.passwordConf}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-
-                    <FormControl required error={errors.idade && touched.idade}>
-                      <FormLabel>Idade</FormLabel>
-                      <Input
-                        type="idade"
-                        name="idade"
-                        value={values.idade}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-
-                    <FormControl
-                      required
-                      error={errors.gender && touched.gender}
-                    >
-                      <FormLabel>Genero</FormLabel>
-                      <Input
-                        type="gender"
-                        name="gender"
-                        value={values.gender}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-
-                    <FormControl
-                      required
-                      error={errors.course && touched.course}
-                    >
-                      <FormLabel>Curso</FormLabel>
-                      <Input
-                        type="course"
-                        name="course"
-                        value={values.course}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Link fontSize="sm" href="/auth/signin" fontWeight="lg">
-                        Ja tem Conta? Entre!
-                      </Link>
-                    </Box>
-                    {isSubmitting ? (
-                      <Button
-                        loading
-                        loadingPosition="end"
-                        endDecorator={<SendIcon />}
-                        variant="solid"
-                      >
-                        Entrando
-                      </Button>
-                    ) : (
-                      <Button type="submit" fullWidth>
-                        Cadastrar
-                      </Button>
-                    )}
-                  </form>
-                );
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const formData = new FormData(event.currentTarget);
+                const formJson = Object.fromEntries(formData.entries());
+                
+                handleFormSubmit(formJson)
               }}
-            </Formik>
+            >
+              <Stack>
+                <FormLabel>Matricula</FormLabel>
+                <Input
+                  type="matricula"
+                  name="matricula"
+                />
+              </Stack>
+              <Stack>
+                <FormLabel>Nome</FormLabel>
+                <Input
+                  type="name"
+                  name="name"
+                />
+              </Stack>
+              <Stack>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                />
+              </Stack>
+
+              <Stack>
+                <FormLabel>Senha</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                />
+              </Stack>
+              <Stack>
+                <FormLabel>Confirmar Senha</FormLabel>
+                <Input
+                  type="password"
+                  name="passwordConf"
+                />
+              </Stack>
+
+              <Stack>
+                <FormLabel>Idade</FormLabel>
+                <Input
+                  type="number"
+                  name="idade"
+                />
+              </Stack>
+
+              <Stack>
+                <FormLabel>Genero</FormLabel>
+                <Select
+                  placeholder="Selecione um genero"
+                  name="genero"
+                  required
+                >
+                  <Option value="Masculino">Masculino</Option>
+                  <Option value="Feminino">Feminino</Option>
+                </Select>
+              </Stack>
+
+              <Stack>
+                <FormLabel>Curso</FormLabel>
+                <Select
+                  placeholder="Selecione o curso"
+                  name="course"
+                  required
+                >
+                  <Option value="Sistemas">Sistemas</Option>
+                  <Option value="Enfermagem">Enfermagem</Option>
+                </Select>
+              </Stack>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Link fontSize="sm" href="/auth/signin" fontWeight="lg">
+                  Ja tem Conta? Entre!
+                </Link>
+              </Box>
+
+              <Button type="submit" fullWidth>
+                Cadastrar
+              </Button>
+            </form>
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" textAlign="center">
