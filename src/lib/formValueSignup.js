@@ -1,16 +1,18 @@
 import * as yup from "yup";
 
 const initialValues = {
+  matricula: "",
   name: "",
   email: "",
   password: "",
   passwordConf: "",
   idade: "",
-  gender: "",
+  genero: "",
   course: "",
 };
 
 const validationSchema = yup.object().shape({
+  matricula: yup.string().required("Campo obrigatório"),
   name: yup.string().required("Campo obrigatório"),  
   email: yup
     .string()
@@ -25,7 +27,7 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "As senhas precisam ser iguais")
     .required("Campo obrigatório"),
   idade: yup.number().positive().integer().required("Campo obrigatório"),
-  gender: yup.string().required("Campo obrigatório"),
+  genero: yup.string().required("Campo obrigatório"),
   course: yup.string().required("Campo obrigatório"),
 });
 
