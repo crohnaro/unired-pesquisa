@@ -26,46 +26,7 @@ import { signIn, useSession } from "next-auth/react";
 import { Formik } from "formik"
 
 import { initialValues, validationSchema } from "@/src/lib/formValueSignin"
-
-
-
-
-const theme = extendTheme({
-  "colorSchemes": {
-    "light": {
-      "palette": {
-        "primary": {
-          "50": "#f1fcfb",
-          "100": "#cff8f4",
-          "200": "#9ef1e8",
-          "300": "#66e2da",
-          "400": "#36cbc5",
-          "500": "#1dafac",
-          "600": "#169898",
-          "700": "#156f70",
-          "800": "#15595a",
-          "900": "#062b2d"
-        }
-      }
-    },
-    "dark": {
-      "palette": {
-        "primary": {
-          "50": "#f1fcfb",
-          "100": "#cff8f4",
-          "200": "#9ef1e8",
-          "300": "#66e2da",
-          "400": "#36cbc5",
-          "500": "#1dafac",
-          "600": "#169898",
-          "700": "#156f70",
-          "800": "#15595a",
-          "900": "#062b2d"
-        }
-      }
-    }
-  }
-})
+import theme from "@/src/theme/theme";
   
 
 function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
