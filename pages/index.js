@@ -1,14 +1,12 @@
-import { Inter } from "next/font/google";
-
 import { getSession, signOut } from "next-auth/react";
 import dbConnect from "../src/utils/dbConnect";
 import { Button } from "@mui/material";
 
-const inter = Inter({ subsets: ["latin"] });
+import TemplateDefault from '../src/template/Default'
 
 const Home = () => {
   return (
-    <>
+    <TemplateDefault>
       <h1>Home</h1>
       <Button
         onClick={() => {
@@ -20,7 +18,7 @@ const Home = () => {
         Sair
       </Button>
       <h1>Teste</h1>
-    </>
+    </TemplateDefault>
   );
 };
 
@@ -38,8 +36,8 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       session: JSON.parse(JSON.stringify(session)),
-    }
-  }
+    },
+  };
 }
 
 export default Home;
