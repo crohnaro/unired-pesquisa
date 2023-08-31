@@ -5,20 +5,39 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { SessionProvider } from "next-auth/react";
 import CheckAuth from "../src/components/CheckAuth";
 
+
+import {
+  useColorScheme as useMaterialColorScheme,
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  experimental_extendTheme as extendMaterialTheme,
+  THEME_ID,
+} from "@mui/material/styles";
+
+import {
+  CssVarsProvider as JoyCssVarsProvider,
+  useColorScheme as useJoyColorScheme,
+} from "@mui/joy/styles";
+
+const materialTheme = extendMaterialTheme();
+
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }) {
   return (
     <SessionProvider session={pageProps.session}>
-      <ToastyProvider>
-        <CssBaseline />
-        {Component.requireAuth ? (
-          <CheckAuth Component={Component} pageProps={pageProps} />
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </ToastyProvider>
+      <MaterialCssVarsProvider theme={{ [THEME_ID]: materialTheme }}>
+        <JoyCssVarsProvider>
+          <ToastyProvider>
+            <CssBaseline />
+            {Component.requireAuth ? (
+              <CheckAuth Component={Component} pageProps={pageProps} />
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </ToastyProvider>
+        </JoyCssVarsProvider>
+      </MaterialCssVarsProvider>
     </SessionProvider>
   );
 }
