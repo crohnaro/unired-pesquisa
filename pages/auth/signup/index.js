@@ -31,7 +31,7 @@ import axios from "axios";
 import { initialValues, validationSchema } from "@/src/lib/formValueSignup";
 import useToasty from "../../../src/contexts/Toasty";
 
-import theme from "@/src/theme/theme";
+import theme from "@/src/theme/JoyTheme/theme";
 
 
 function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
