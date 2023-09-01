@@ -26,7 +26,7 @@ import { signIn, useSession } from "next-auth/react";
 import { Formik } from "formik"
 
 import { initialValues, validationSchema } from "@/src/lib/formValueSignin"
-import theme from "@/src/theme/theme";
+import theme from "@/src/theme/JoyTheme/theme";
   
 
 function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
@@ -67,7 +67,7 @@ const handleAuthentication = async (values) => {
     const response = await signIn("credentials", {
       email: values.email,
       password: values.password,
-      callbackUrl: "/user/dashboard",
+      callbackUrl: "/",
     });
     return response;
   } catch (error) {
