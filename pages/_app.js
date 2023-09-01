@@ -18,7 +18,10 @@ import {
   useColorScheme as useJoyColorScheme,
 } from "@mui/joy/styles";
 
+import JoyTheme from '../src/theme/JoyTheme/theme'
+
 const materialTheme = extendMaterialTheme();
+
 
 export default function MyApp({
   Component,
@@ -27,7 +30,7 @@ export default function MyApp({
   return (
     <SessionProvider session={pageProps.session}>
       <MaterialCssVarsProvider theme={{ [THEME_ID]: materialTheme }}>
-        <JoyCssVarsProvider>
+        <JoyCssVarsProvider theme={JoyTheme}>
           <ToastyProvider>
             <CssBaseline />
             {Component.requireAuth ? (
