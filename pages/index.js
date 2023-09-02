@@ -1,23 +1,17 @@
 import { getSession, signOut } from "next-auth/react";
 import dbConnect from "../src/utils/dbConnect";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 
 import TemplateDefault from '../src/template/Default'
 
 const Home = () => {
   return (
     <TemplateDefault>
-      <h1>Home</h1>
-      <Button
-        onClick={() => {
-          signOut({
-            callbackUrl: "/auth/signin",
-          });
-        }}
-      >
-        Sair
-      </Button>
-      <h1>Teste</h1>
+      <Container maxWidth="md">
+        <h1>Home</h1>
+      </Container>
+      
+      
     </TemplateDefault>
   );
 };
