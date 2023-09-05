@@ -4,14 +4,13 @@ import { Button, Container } from "@mui/material";
 
 import TemplateDefault from '../src/template/Default'
 
+import QuestionsAndAnswerForms from '../src/components/QuestionsAndAnswersForms'
+
 const Home = () => {
   return (
     <TemplateDefault>
-      <Container maxWidth="md">
-        <h1>Home</h1>
-      </Container>
       
-      
+      <QuestionsAndAnswerForms />
     </TemplateDefault>
   );
 };
