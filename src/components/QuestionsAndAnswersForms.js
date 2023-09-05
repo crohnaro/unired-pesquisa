@@ -9,19 +9,12 @@ import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
 import IconButton from "@mui/joy/IconButton";
-import Link from "@mui/joy/Link";
-import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import Image from "next/image";
-
-import logowh from "../../public/logo white.png";
-import logoblk from "../../public/logo black.png";
-
 
 import { useRouter } from "next/router";
 
@@ -30,7 +23,6 @@ import axios from "axios";
 import useToasty from "../../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
-
 
 function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
   const { mode, setMode } = useColorScheme();
@@ -70,9 +62,9 @@ export default function Signup() {
   const { setToasty } = useToasty();
 
   const handleFormSubmit = async (formJson) => {
-    const response = await axios.post("/api/users", formJson);
+    const response = await axios.post("", formJson);
 
-    console.log(formJson)
+    console.log(formJson);
     if (response.data.success) {
       setToasty({
         open: true,
@@ -83,6 +75,21 @@ export default function Signup() {
       router.push("/auth/signin");
     }
   };
+
+  const [questions, setQuestions] = React.useState([]);
+
+  React.useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const response = await axios.get("/api/questions"); // Substitua pela rota real
+        setQuestions(response.data.questions);
+      } catch (error) {
+        console.error("Erro ao buscar perguntas:", error);
+      }
+    }
+
+    fetchQuestions();
+  }, []);
   const [logoMode, setLogoMode] = React.useState("light");
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange theme={theme}>
@@ -144,7 +151,7 @@ export default function Signup() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              width: 400,
+              width: 600,
               maxWidth: "100%",
               mx: "auto",
               borderRadius: "sm",
@@ -160,7 +167,43 @@ export default function Signup() {
           >
             <div>
               <Typography component="h1" fontSize="xl2" fontWeight="lg">
-                Responda nossa pesquisa!
+                Prezado(a) Estudante
+              </Typography>
+              <Typography level="body-sm" sx={{ my: 1, mb: 3 }}>
+                É com grande interesse que convidamos você a participar de um
+                momento fundamental para a pesquisa que está sendo conduzida no
+                âmbito da UniRedentor. Esta pesquisa tem como objetivo
+                aprofundar nossa compreensão sobre as percepções e sentimentos
+                dos estudantes em relação à sua experiência acadêmica,
+                especificamente no que diz respeito à graduação que estão
+                cursando.
+              </Typography>
+              <Typography level="body-sm" sx={{ my: 1, mb: 3 }}>
+                Sabemos que a vida acadêmica é repleta de desafios e
+                realizações, e a sua perspectiva é inestimável para enriquecer
+                nosso entendimento sobre os diversos aspectos envolvidos. Sua
+                participação ao responder o questionário contribuirá
+                significativamente para o avanço do conhecimento na área de
+                Ensino das Ciências e Saúde, possibilitando a criação de
+                estratégias mais eficazes para melhorar a qualidade da educação
+                e o bem-estar dos estudantes.
+              </Typography>
+              <Typography level="body-sm" sx={{ my: 1, mb: 3 }}>
+                Este SCORE busca capturar seus sentimentos e percepções genuínos
+                em relação à sua graduação. Queremos que você se sinta à vontade
+                para expressar seus pensamentos de maneira verdadeira e
+                autêntica. Suas respostas serão tratadas com total
+                confidencialidade e serão utilizadas apenas para fins de análise
+                estatística e pesquisa acadêmica.
+              </Typography>
+              <Typography level="body-sm" sx={{ my: 1, mb: 3 }}>
+                Pedimos que avalie cada sentimento que você tem em relação à sua
+                graduação, atribuindo um número de 1 a 3, de acordo com a
+                frequência com que esses sentimentos emergem em seus
+                pensamentos. Utilize a seguinte escala:
+              </Typography>
+              <Typography level="body-sm" sx={{ my: 1, mb: 3 }}>
+                1 - NUNCA ou RARAMENTE 2 - FREQUENTEMENTE 3 - SEMPRE
               </Typography>
             </div>
 
@@ -169,113 +212,25 @@ export default function Signup() {
                 event.preventDefault();
                 const formData = new FormData(event.currentTarget);
                 const formJson = Object.fromEntries(formData.entries());
-                
-                handleFormSubmit(formJson)
+
+                handleFormSubmit(formJson);
               }}
             >
-               <Stack>
-                <FormLabel>Pergunta 1</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
+              {questions.map((question) => (
+                <Stack marginBottom={2} gap={1} key={question._id}>
+                  <FormLabel>{question.text}</FormLabel>
+                  <Select
+                    placeholder="Selecione uma opção"
+                    name="questions"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE  </Option>
+                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+              ))}
 
-              <Stack>
-                <FormLabel>Pergunta 2</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 3</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 4</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 5</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 6</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 7</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
-
-              <Stack>
-                <FormLabel>Pergunta 8</FormLabel>
-                <Select
-                  placeholder="Selecione a resposta"
-                  name="genero"
-                  required
-                >
-                  <Option value="Opção 1">Opção 1</Option>
-                  <Option value="Opção 2">Opção 2</Option>
-                  <Option value="Opção 3">Opção 3</Option>
-                </Select>
-              </Stack>
               <Button type="submit" fullWidth>
                 Enviar Respostas!
               </Button>
