@@ -6,7 +6,7 @@ const Default = ({ children }) => {
   return (
     <>
       <Header />
-        <Box sx={{marginTop: '100px'}}>
+        <Box>
             {children}
         </Box>
     </>
