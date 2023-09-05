@@ -8,10 +8,13 @@ const schema = new mongoose.Schema({
     // Referência à pergunta à qual esta resposta está associada
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'users',
-    required: true,
-    // Referência ao usuário que respondeu à pergunta
+    id: String,
+    name: String,
+    email: String,
+    idade: Number,
+    genero: String,
+    course: String,
+    matricula: String,
   },
   text: {
     type: String,
