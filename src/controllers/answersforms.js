@@ -19,25 +19,31 @@ const post = async (req, res) => {
 
     const {
       question,
-      user,
       text,
+      matricula,
       name,
+      email,
+      idade,
+      genero,
+      course
 
     } = fields;
 
-    const product = new ProductsModel({
+    const answer = new AnswersModel({
       question,
       text,
       user: {
+        matricula,
         id: userEmail,
         name,
         email,
-        phone,
+        idade, 
+        genero, 
+        course,
       },
-      files: filesToSave,
     });
 
-    const register = await product.save();
+    const register = await answer.save();
 
     if (register) {
       res.status(201).json({ success: true });
