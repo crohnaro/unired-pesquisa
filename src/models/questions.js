@@ -4,6 +4,7 @@ const schema = new mongoose.Schema({
   text: {
     type: String,
     required: true,
+    unique: true,
     // O texto da pergunta
   },
 });
