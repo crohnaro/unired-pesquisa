@@ -62,7 +62,7 @@ export default function Signup() {
   const { setToasty } = useToasty();
 
   const handleFormSubmit = async (formJson) => {
-    const response = await axios.post("", formJson);
+    const response = await axios.post("/api/answersforms", formJson);
 
     console.log(formJson);
     if (response.data.success) {
@@ -221,7 +221,7 @@ export default function Signup() {
                   <FormLabel>{question.text}</FormLabel>
                   <Select
                     placeholder="Selecione uma opção"
-                    name="questions"
+                    name="answers"
                     required
                   >
                     <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE  </Option>
