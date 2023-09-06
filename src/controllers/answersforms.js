@@ -12,7 +12,7 @@ const post = async (req, res) => {
     keepExtensions: true,
   });
   
-  form.parse(req, async (error, fields, data) => {
+  form.parse(req, async (error, fields ) => {
     if (error) {
       return res.status(500).json({ success: false });
     }
