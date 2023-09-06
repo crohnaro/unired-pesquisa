@@ -1,9 +1,7 @@
 import nextConnect from "next-connect";
-import { get, post } from "../../src/controllers/questionandanswersforms";
+import { post } from "../../src/controllers/answersforms";
 
 const route = nextConnect();
-
-route.get(get);
 
 route.post(post);
 
