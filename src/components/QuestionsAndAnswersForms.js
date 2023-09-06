@@ -212,7 +212,7 @@ export default function Signup() {
                 event.preventDefault();
                 const formData = new FormData(event.currentTarget);
                 const formJson = Object.fromEntries(formData.entries());
-
+                console.log(formJson);
                 handleFormSubmit(formJson);
               }}
             >
