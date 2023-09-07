@@ -23,6 +23,7 @@ import axios from "axios";
 import useToasty from "../../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
+import { Input } from "@mui/material";
 
 function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
   const { mode, setMode } = useColorScheme();
@@ -57,7 +58,7 @@ function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
   );
 }
 
-export default function Signup() {
+export default function QuestionAndAnswerForms() {
   const router = useRouter();
   const { setToasty } = useToasty();
 
@@ -216,6 +217,8 @@ export default function Signup() {
                 handleFormSubmit(formJson);
               }}
             >
+              <Input type="hidden" name="userEmail" value={values.userEmail} />
+              <Input type="hidden" name="image" value={values.image} />
               {questions.map((question) => (
                 <Stack marginBottom={2} gap={1} key={question._id}>
                   <FormLabel>{question.text}</FormLabel>
@@ -245,4 +248,19 @@ export default function Signup() {
       </Box>
     </CssVarsProvider>
   );
+}
+
+
+export async function getServerSideProps({ req }) {
+  const { accessToken, user } = await getSession({ req });
+
+  let token = "";
+  accessToken ? (token = accessToken) : (token = user.email);
+
+
+  return {
+    props: {
+      userEmail: token,
+    },
+  };
 }
