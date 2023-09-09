@@ -28,7 +28,7 @@ export default function MyApp({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={session}>
       <MaterialCssVarsProvider theme={{ [THEME_ID]: materialTheme }}>
         <JoyCssVarsProvider theme={JoyTheme}>
           <ToastyProvider>
