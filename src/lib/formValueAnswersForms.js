@@ -1,0 +1,78 @@
+import * as yup from "yup";
+
+const initialValues = {
+  matricula: "",
+  name: "",
+  email: "",
+  idade: "",
+  genero: "",
+  course: "",
+  resposta1: "",
+  resposta2: "",
+  resposta3: "",
+  resposta4: "",
+  resposta5: "",
+  resposta6: "",
+  resposta7: "",
+  resposta8: "",
+  resposta9: "",
+  resposta10: "",
+  resposta11: "",
+  resposta12: "",
+  resposta13: "",
+  resposta14: "",
+  resposta15: "",
+  resposta16: "",
+  resposta17: "",
+  resposta18: "",
+  resposta19: "",
+  resposta20: "",
+  resposta21: "",
+  resposta22: "",
+  resposta23: "",
+  resposta24: "",
+  resposta25: "",
+  resposta26: "",
+
+};
+
+const validationSchema = yup.object().shape({
+  matricula: yup.string().required("Campo obrigatório"),
+  name: yup.string().required("Campo obrigatório"),  
+  email: yup
+    .string()
+    .email("Digite um e-mail válido")
+    .required("Campo obrigatório"),
+  idade: yup.number().positive().integer().required("Campo obrigatório"),
+  genero: yup.string().required("Campo obrigatório"),
+  course: yup.string().required("Campo obrigatório"),
+  resposta1: yup.string().required("Campo obrigatório"),
+  resposta2: yup.string().required("Campo obrigatório"),
+  resposta3: yup.string().required("Campo obrigatório"),
+  resposta4: yup.string().required("Campo obrigatório"),
+  resposta5: yup.string().required("Campo obrigatório"),
+  resposta6: yup.string().required("Campo obrigatório"),
+  resposta7: yup.string().required("Campo obrigatório"),
+  resposta8: yup.string().required("Campo obrigatório"),
+  resposta9: yup.string().required("Campo obrigatório"),
+  resposta10: yup.string().required("Campo obrigatório"),
+  resposta11: yup.string().required("Campo obrigatório"),
+  resposta12: yup.string().required("Campo obrigatório"),
+  resposta13: yup.string().required("Campo obrigatório"),
+  resposta14: yup.string().required("Campo obrigatório"),
+  resposta15: yup.string().required("Campo obrigatório"),
+  resposta16: yup.string().required("Campo obrigatório"),
+  resposta17: yup.string().required("Campo obrigatório"),
+  resposta18: yup.string().required("Campo obrigatório"),
+  resposta19: yup.string().required("Campo obrigatório"),
+  resposta20: yup.string().required("Campo obrigatório"),
+  resposta21: yup.string().required("Campo obrigatório"),
+  resposta22: yup.string().required("Campo obrigatório"),
+  resposta23: yup.string().required("Campo obrigatório"),
+  resposta24: yup.string().required("Campo obrigatório"),
+  resposta25: yup.string().required("Campo obrigatório"),
+  resposta26: yup.string().required("Campo obrigatório"),
+
+});
+
+export { initialValues, validationSchema };
