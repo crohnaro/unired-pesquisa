@@ -5,6 +5,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { SessionProvider } from "next-auth/react";
 import CheckAuth from "../src/components/CheckAuth";
 
+import "../styles/globals.css"
+
 
 import {
   useColorScheme as useMaterialColorScheme,
