@@ -10,7 +10,7 @@ import axios from "axios";
 import useToasty from "../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
-import Input from "@mui/joy/Input";
+
 
 import {
   Box,
@@ -18,14 +18,13 @@ import {
   Container,
   FormControl,
   FormHelperText,
-  InputAdornment,
-  InputLabel,
   Select,
   Typography,
   Input,
   MenuItem,
   CircularProgress,
   FormLabel,
+  CssBaseline,
 } from "@mui/material";
 
 import { getSession } from "next-auth/react";
@@ -33,45 +32,15 @@ import dbConnect from "../src/utils/dbConnect";
 import UsersModel from "../src/models/users";
 
 import TemplateDefault from "../src/template/Default";
+import { Formik } from "formik";
+import { initialValues, validationSchema } from "@/src/lib/formValueAnswersForms";
 
-function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
-  }
-  return (
-    <IconButton
-      id="toggle-mode"
-      size="sm"
-      variant="plain"
-      color="neutral"
-      aria-label="toggle light/dark mode"
-      {...props}
-      onClick={(event) => {
-        if (mode === "light") {
-          setMode("dark");
-          setLogoMode("dark");
-        } else {
-          setMode("light");
-          setLogoMode("light");
-        }
-        onClick?.(event);
-      }}
-    >
-      {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-    </IconButton>
-  );
-}
 
-const Home = ({}) => {
+
+const Home = ({ userEmail }) => {
   const router = useRouter();
   const { setToasty } = useToasty();
-  console.log(user);
-  console.log(session);
+
 
   const handleFormSubmit = async (formJson) => {
     const response = await axios.post("/api/answersforms", formJson);
@@ -90,21 +59,11 @@ const Home = ({}) => {
     }
   };
 
-  const [questions, setQuestions] = React.useState([]);
-  const [logoMode, setLogoMode] = React.useState("light");
+  const formValues = {
+    ...initialValues,
+  };
+  formValues.userEmail = userEmail;
 
-  React.useEffect(() => {
-    async function fetchQuestions() {
-      try {
-        const response = await axios.get("/api/questions"); // Substitua pela rota real
-        setQuestions(response.data.questions);
-      } catch (error) {
-        console.error("Erro ao buscar perguntas:", error);
-      }
-    }
-
-    fetchQuestions();
-  }, []);
   return (
     <TemplateDefault>
       <CssBaseline />
@@ -136,17 +95,6 @@ const Home = ({}) => {
           }}
         >
           <Box
-            component="header"
-            sx={{
-              py: 3,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
-            <ColorSchemeToggle logoMode={logoMode} setLogoMode={setLogoMode} />
-          </Box>
-          <Box
             component="main"
             sx={{
               my: "auto",
@@ -163,9 +111,6 @@ const Home = ({}) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-              },
-              [`& .${formLabelClasses.asterisk}`]: {
-                visibility: "hidden",
               },
             }}
           >
@@ -239,38 +184,35 @@ const Home = ({}) => {
                     >
                       <Box
                         style={{
-                          backgroundColor: backgroundColor,
                           padding: theme.spacing(3),
                         }}
                       >
-                        {questions.map((question) => (
-                          <FormControl
-                            error={errors.question && touched.question}
+                        <FormControl
+                          error={errors.resposta1 && touched.resposta1}
+                          fullWidth
+                        >
+                          <FormLabel>Em geral, sinto-me motivado com meu curso:</FormLabel>
+                          <Select
+                            name="resposta1"
+                            value={values.resposta1}
+                            onChange={handleChange}
+                            label="Selecione uma opção"
                             fullWidth
                           >
-                            <FormLabel>{question.text}</FormLabel>
-                            <Select
-                              name="answers"
-                              value={values.question}
-                              onChange={handleChange}
-                              label="Selecione uma opção"
-                              fullWidth
-                            >
-                              <MenuItem value={"1 - NUNCA ou RARAMENTE"}>
+                            <MenuItem value={"1 - NUNCA ou RARAMENTE"}>
                               1 - NUNCA ou RARAMENTE
-                              </MenuItem>
-                              <MenuItem value={"2 - FREQUENTEMENTE"}>
+                            </MenuItem>
+                            <MenuItem value={"2 - FREQUENTEMENTE"}>
                               2 - FREQUENTEMENTE
-                              </MenuItem>
-                              <MenuItem value={"3 - SEMPRE"}>3 - SEMPRE</MenuItem>
-                            </Select>
-                            <FormHelperText>
-                              {errors.question && touched.question
-                                ? errors.question
-                                : null}
-                            </FormHelperText>
-                          </FormControl>
-                        ))}
+                            </MenuItem>
+                            <MenuItem value={"3 - SEMPRE"}>3 - SEMPRE</MenuItem>
+                          </Select>
+                          <FormHelperText>
+                            {errors.resposta1 && touched.resposta1
+                              ? errors.resposta1
+                              : null}
+                          </FormHelperText>
+                        </FormControl>
                       </Box>
                     </Container>
 
@@ -285,11 +227,12 @@ const Home = ({}) => {
                           />
                         ) : (
                           <Button
+                            fullWidth
                             type="submit"
                             variant="contained"
                             color="primary"
                           >
-                            Publicar Anúncio
+                            Enviar Respostas!
                           </Button>
                         )}
                       </Box>
