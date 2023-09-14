@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
+import { CssVarsProvider } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
 
@@ -8,21 +8,15 @@ import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
-import IconButton from "@mui/joy/IconButton";
+
 import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import Image from "next/image";
-
-
-
 import logowh from "../../../public/logo white.png";
-import logoblk from "../../../public/logo black.png";
 
 import { useRouter } from "next/router";
 
@@ -33,38 +27,7 @@ import useToasty from "../../../src/contexts/Toasty";
 import theme from "@/src/theme/JoyTheme/theme";
 
 
-function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
-  }
-  return (
-    <IconButton
-      id="toggle-mode"
-      size="sm"
-      variant="plain"
-      color="neutral"
-      aria-label="toggle light/dark mode"
-      {...props}
-      onClick={(event) => {
-        if (mode === "light") {
-          setMode("dark");
-          setLogoMode("dark");
-        } else {
-          setMode("light");
-          setLogoMode("light");
-        }
-        onClick?.(event);
-      }}
-    >
-      {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-    </IconButton>
-  );
-}
+
 
 export default function Signup() {
   const router = useRouter();
@@ -84,7 +47,6 @@ export default function Signup() {
       router.push("/auth/signin");
     }
   };
-  const [logoMode, setLogoMode] = React.useState("light");
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange theme={theme}>
       <CssBaseline />
@@ -149,10 +111,9 @@ export default function Signup() {
                 alt="anunX Logo"
                 width={120}
                 priority
-                src={logoMode === "dark" ? logowh : logoblk}
+                src={logowh}
               />
             </Link>
-            <ColorSchemeToggle logoMode={logoMode} setLogoMode={setLogoMode} />
           </Box>
           <Box
             component="main"
@@ -249,6 +210,8 @@ export default function Signup() {
                 >
                   <Option value="Masculino">Masculino</Option>
                   <Option value="Feminino">Feminino</Option>
+                  <Option value="Não binário">Não binário</Option>
+                  <Option value="Prefiro não declarar">Prefiro não declarar</Option>
                 </Select>
               </Stack>
 
@@ -259,8 +222,18 @@ export default function Signup() {
                   name="course"
                   required
                 >
-                  <Option value="Sistemas">Sistemas</Option>
+                  <Option value="Sistemas de Informação">Sistemas de Informação</Option>
                   <Option value="Enfermagem">Enfermagem</Option>
+                  <Option value="Direito">Direito</Option>
+                  <Option value="Eng. Civil">Eng. Civil</Option>
+                  <Option value="Eng. Elétrica">Eng. Elétrica</Option>
+                  <Option value="Eng. Mecânica">Eng. Mecânica</Option>
+                  <Option value="Fonoaudiologia">Fonoaudiologia</Option>
+                  <Option value="Arquitetura e Urbanismo">Arquitetura e Urbanismo</Option>
+                  <Option value="Fisioterapia">Fisioterapia</Option>
+                  <Option value="Nutrição">Nutrição</Option>
+                  <Option value="Psicologia">Psicologia</Option>
+                  <Option value="Medicina">Medicina</Option>
                 </Select>
               </Stack>
 
