@@ -20,7 +20,6 @@ import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
 import IconButton from "@mui/joy/IconButton";
-import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
 import Select from "@mui/joy/Select";
@@ -67,12 +66,13 @@ function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
 }
 
 
-const Home = ({ user }) => {
+const Home = ({ user, userEmail }) => {
   const router = useRouter();
   const { setToasty } = useToasty();
   const [logoMode, setLogoMode] = React.useState("light");
 
   console.log(user);
+  console.log(userEmail);
 
   const handleFormSubmit = async (formJson) => {
     const response = await axios.post("/api/answersforms", formJson);
@@ -87,7 +87,7 @@ const Home = ({ user }) => {
         text: "Cadastro realizado com sucesso!",
       });
 
-      router.push("/auth/signin");
+      router.push("");
     }
   };
 
@@ -225,19 +225,20 @@ const Home = ({ user }) => {
                   handleFormSubmit(formJson);
                 }}
               >
-                <Stack sx={{ display: "none"}}>
-                  <Input></Input>
-                  <Input></Input>
-                  <Input></Input>
-                  <Input></Input>
-                  <Input></Input>
-                  <Input></Input>
+                <Stack >
+                  <Input name="matricula" value={user} />
+                  <Input value={user.name} />
+                  <Input value={user.idade} />
+                  <Input value={user.genero} />
+                  <Input value={user.course} />
+                  <Input value={user.email} />
+                  <Input  />
                 </Stack>
                 <Stack>
-                  <FormLabel>Genero</FormLabel>
+                  <FormLabel>1 - Em geral, sinto-me motivado com meu curso:</FormLabel>
                   <Select
                     placeholder="Selecione uma resposta"
-                    name="genero"
+                    name="resposta1"
                     required
                   >
                     <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
@@ -247,10 +248,10 @@ const Home = ({ user }) => {
                 </Stack>
 
                 <Stack>
-                  <FormLabel>Curso</FormLabel>
+                  <FormLabel>2 - Sinto que faço parte de uma comunidade acadêmica unida e colaborativa.</FormLabel>
                   <Select
                     placeholder="Selecione o curso"
-                    name="course"
+                    name="resposta2"
                     required
                   >
                     <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
@@ -258,6 +259,45 @@ const Home = ({ user }) => {
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
+
+                <Stack>
+                  <FormLabel>3 - Tenho uma clara compreensão dos objetivos e benefícios da minha graduação.</FormLabel>
+                  <Select
+                    placeholder="Selecione o curso"
+                    name="resposta3"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
+                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <FormLabel>4 - Sinto que tenho apoio necessário para superar meus desafios acadêmicos:</FormLabel>
+                  <Select
+                    placeholder="Selecione o curso"
+                    name="resposta4"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
+                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>5 -  Sinto que minhas necessidades e opiniões são valorizadas pela instituição</FormLabel>
+                  <Select
+                    placeholder="Selecione o curso"
+                    name="resposta5"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
+                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
                 <Button type="submit" fullWidth>
                   Enviar Respostas
                 </Button>
@@ -292,6 +332,7 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       user: JSON.parse(JSON.stringify(user)),
+      userEmail: token,
     },
   };
 }
