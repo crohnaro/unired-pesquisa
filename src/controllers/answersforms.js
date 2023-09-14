@@ -6,17 +6,6 @@ import formidable from "formidable-serverless";
 const post = async (req, res) => {
 
   await dbConnect();
-
-  const form = new formidable.IncomingForm({
-    multiples: true,
-    keepExtensions: true,
-  });
-  
-  form.parse(req, async (error, fields ) => {
-    if (error) {
-      return res.status(500).json({ success: false });
-    }
-
     const {
       resposta1,
       resposta2,
@@ -44,6 +33,7 @@ const post = async (req, res) => {
       resposta24,
       resposta25,
       resposta26,*/
+      userEmail,
       matricula,
       name,
       email,
@@ -51,7 +41,7 @@ const post = async (req, res) => {
       genero,
       course
 
-    } = fields;
+    } = req.body;
 
     const answer = new AnswersModel({
       resposta1,
@@ -99,7 +89,7 @@ const post = async (req, res) => {
     } else {
       res.status(500).json({ success: false });
     }
-  });
+  
 };
 
 export { post };

@@ -226,6 +226,7 @@ const Home = ({ user, userEmail }) => {
                 }}
               >
                 <Stack >
+
                   <Input name="matricula" value={user[0].matricula} />
                   <Input name="name" value={user[0].name} />
                   <Input name="idade" value={user[0].idade} />
