@@ -19,7 +19,7 @@ const CheckAuth = ({ Component, pageProps }) => {
         return <Component {...pageProps} />
     } 
 
-    return 'Carregando...'
+    return ''
 
 
 }
