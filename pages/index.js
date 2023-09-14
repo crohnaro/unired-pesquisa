@@ -226,13 +226,13 @@ const Home = ({ user, userEmail }) => {
                 }}
               >
                 <Stack >
-                  <Input name="matricula" value={user} />
-                  <Input value={user.name} />
-                  <Input value={user.idade} />
-                  <Input value={user.genero} />
-                  <Input value={user.course} />
-                  <Input value={user.email} />
-                  <Input  />
+                  <Input name="matricula" value={user[0].matricula} />
+                  <Input name="name" value={user[0].name} />
+                  <Input name="idade" value={user[0].idade} />
+                  <Input name="genero" value={user[0].genero} />
+                  <Input name="course" value={user[0].course} />
+                  <Input name="email"value={user[0].email} />
+                  <Input name="userEmail" value={userEmail} />
                 </Stack>
                 <Stack>
                   <FormLabel>1 - Em geral, sinto-me motivado com meu curso:</FormLabel>
@@ -324,7 +324,7 @@ export async function getServerSideProps({ req }) {
   let token = session?.accessToken || session?.user?.email || "";
 
   const user = await UsersModel.find({
-    email: session?.user?.email,
+    "email": session?.user?.email,
   });
 
   console.log(user);
