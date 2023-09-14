@@ -19,16 +19,15 @@ import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import Image from "next/image";
 
-import { extendTheme } from "@mui/joy/styles";
+
 
 import logowh from "../../../public/logo white.png";
 import logoblk from "../../../public/logo black.png";
-import SendIcon from "@mui/icons-material/Send";
 
 import { useRouter } from "next/router";
-import { Formik, validateYupSchema } from "formik";
+
 import axios from "axios";
-import { initialValues, validationSchema } from "@/src/lib/formValueSignup";
+
 import useToasty from "../../../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
