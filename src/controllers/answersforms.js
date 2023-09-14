@@ -23,7 +23,7 @@ const post = async (req, res) => {
       resposta3,
       resposta4,
       resposta5,
-      resposta6,
+      /*resposta6,
       resposta7,
       resposta8,
       resposta9,
@@ -43,7 +43,7 @@ const post = async (req, res) => {
       resposta23,
       resposta24,
       resposta25,
-      resposta26,
+      resposta26,*/
       matricula,
       name,
       email,
@@ -59,7 +59,7 @@ const post = async (req, res) => {
       resposta3,
       resposta4,
       resposta5,
-      resposta6,
+      /*resposta6,
       resposta7,
       resposta8,
       resposta9,
@@ -79,7 +79,7 @@ const post = async (req, res) => {
       resposta23,
       resposta24,
       resposta25,
-      resposta26,
+      resposta26,*/
       userEmail,
       user: {
         matricula,
