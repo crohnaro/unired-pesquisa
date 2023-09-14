@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
   resposta3: String,
   resposta4: String,
   resposta5: String,
-  resposta6: String,
+  /*resposta6: String,
   resposta7: String,
   resposta8: String,
   resposta9: String,
@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
   resposta23: String,
   resposta24: String,
   resposta25: String,
-  resposta26: String,
+  resposta26: String,*/
   user: {
     id: String,
     name: String,
