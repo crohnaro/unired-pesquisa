@@ -11,7 +11,7 @@ import useToasty from "../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
 
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
+import { CssVarsProvider } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
 
@@ -19,12 +19,10 @@ import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
-import IconButton from "@mui/joy/IconButton";
 import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
-
 
 import { getSession } from "next-auth/react";
 import dbConnect from "../src/utils/dbConnect";
@@ -32,62 +30,21 @@ import UsersModel from "../src/models/users";
 
 import TemplateDefault from "../src/template/Default";
 
-function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
-  }
-  return (
-    <IconButton
-      id="toggle-mode"
-      size="sm"
-      variant="plain"
-      color="neutral"
-      aria-label="toggle light/dark mode"
-      {...props}
-      onClick={(event) => {
-        if (mode === "light") {
-          setMode("dark");
-          setLogoMode("dark");
-        } else {
-          setMode("light");
-          setLogoMode("light");
-        }
-        onClick?.(event);
-      }}
-    >
-      {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-    </IconButton>
-  );
-}
-
-
 const Home = ({ user, userEmail }) => {
   const router = useRouter();
   const { setToasty } = useToasty();
-  const [logoMode, setLogoMode] = React.useState("light");
-
-  console.log(user);
-  console.log(userEmail);
 
   const handleFormSubmit = async (formJson) => {
     const response = await axios.post("/api/answersforms", formJson);
 
-    console.log(user);
-
-    console.log(formJson);
     if (response.data.success) {
       setToasty({
         open: true,
-        seveity: "success",
+        severity: "success",
         text: "Cadastro realizado com sucesso!",
       });
 
-      router.push("");
+      router.push("/respostasconfirmadas");
     }
   };
 
@@ -111,8 +68,7 @@ const Home = ({ user, userEmail }) => {
         />
         <Box
           sx={(theme) => ({
-            width:
-              "100%",
+            width: "100%",
             transition: "width var(--Transition-duration)",
             transitionDelay: "calc(var(--Transition-duration) + 0.1s)",
             position: "relative",
@@ -146,10 +102,6 @@ const Home = ({ user, userEmail }) => {
                 justifyContent: "flex-end",
               }}
             >
-              <ColorSchemeToggle
-                logoMode={logoMode}
-                setLogoMode={setLogoMode}
-              />
             </Box>
             <Box
               component="main"
@@ -225,76 +177,507 @@ const Home = ({ user, userEmail }) => {
                   handleFormSubmit(formJson);
                 }}
               >
-                <Stack >
-
+                <Stack sx={{ display: "none" }}>
                   <Input name="matricula" value={user[0].matricula} />
                   <Input name="name" value={user[0].name} />
                   <Input name="idade" value={user[0].idade} />
                   <Input name="genero" value={user[0].genero} />
                   <Input name="course" value={user[0].course} />
-                  <Input name="email"value={user[0].email} />
+                  <Input name="email" value={user[0].email} />
                   <Input name="userEmail" value={userEmail} />
                 </Stack>
                 <Stack>
-                  <FormLabel>1 - Em geral, sinto-me motivado com meu curso:</FormLabel>
+                  <FormLabel>
+                    1 - Em geral, sinto-me motivado com meu curso:
+                  </FormLabel>
                   <Select
                     placeholder="Selecione uma resposta"
                     name="resposta1"
                     required
                   >
-                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
-                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
 
                 <Stack>
-                  <FormLabel>2 - Sinto que faço parte de uma comunidade acadêmica unida e colaborativa.</FormLabel>
+                  <FormLabel>
+                    2 - Sinto que faço parte de uma comunidade acadêmica unida e
+                    colaborativa.
+                  </FormLabel>
                   <Select
-                    placeholder="Selecione o curso"
+                    placeholder="Selecione uma resposta"
                     name="resposta2"
                     required
                   >
-                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
-                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
 
                 <Stack>
-                  <FormLabel>3 - Tenho uma clara compreensão dos objetivos e benefícios da minha graduação.</FormLabel>
+                  <FormLabel>
+                    3 - Tenho uma clara compreensão dos objetivos e benefícios
+                    da minha graduação.
+                  </FormLabel>
                   <Select
-                    placeholder="Selecione o curso"
+                    placeholder="Selecione uma resposta"
                     name="resposta3"
                     required
                   >
-                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
-                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
                 <Stack>
-                  <FormLabel>4 - Sinto que tenho apoio necessário para superar meus desafios acadêmicos:</FormLabel>
+                  <FormLabel>
+                    4 - Sinto que tenho apoio necessário para superar meus
+                    desafios acadêmicos:
+                  </FormLabel>
                   <Select
-                    placeholder="Selecione o curso"
+                    placeholder="Selecione uma resposta"
                     name="resposta4"
                     required
                   >
-                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
-                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
 
                 <Stack>
-                  <FormLabel>5 -  Sinto que minhas necessidades e opiniões são valorizadas pela instituição</FormLabel>
+                  <FormLabel>
+                    5 - Sinto que minhas necessidades e opiniões são valorizadas
+                    pela instituição
+                  </FormLabel>
                   <Select
-                    placeholder="Selecione o curso"
+                    placeholder="Selecione uma resposta"
                     name="resposta5"
                     required
                   >
-                    <Option value="1 - NUNCA ou RARAMENTE">1 - NUNCA ou RARAMENTE</Option>
-                    <Option value="2 - FREQUENTEMENTE">2 - FREQUENTEMENTE</Option>
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <FormLabel>
+                    6 - Sinto um senso de pertencimento à minha faculdade.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta6"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>7 - Apresento dificuldades financeiras:</FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta7"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    8 - Tenho dificuldade em conciliar trabalho e estudos:
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta8"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    9 - Tenho dificuldade em conciliar casa/ família e estudos
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta9"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    10 - Me irrito com a distância da instituição de ensino X
+                    minha casa:
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta10"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    11 - Sinto que meu curso não é condizente com meu perfil.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta11"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    12 - O clima com os colegas de sala não contribuem para que
+                    eu me sinta a vontade.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta12"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    13 - Sinto que o corpo docente ou parte dele, não tem a
+                    experiência e o conhecimento mínimos para uma boa formação.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta13"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    14 - Percebo que o corpo docente ou parte dele, não se
+                    importa com as relações entre docentes e alunos.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta14"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    15 - Sinto falta de apoio da coordenação de curso.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta15"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    16 - Sinto falta de infra infraestrutura da IES.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta16"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>17 - Sinto falta de apoio pedagógico.</FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta17"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>18 - Sinto falta de apoio psicológico.</FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta18"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>19 - Percebo excesso de atividades.</FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta19"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>20 - Tenho dificuldade em fazer provas.</FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta20"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    21 - Tenho dificuldade para chegar no horário ou ter de sair
+                    mais cedo.
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta21"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    22 - Avalie cada sentimento que você tem em relação à sua
+                    graduação: MEDO{" "}
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta22"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    23 - Avalie cada sentimento que você tem em relação à sua
+                    graduação: INSEGURANÇA{" "}
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta23"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    24 - Avalie cada sentimento que você tem em relação à sua
+                    graduação: ANGÚSTIA{" "}
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta24"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    25 - Avalie cada sentimento que você tem em relação à sua
+                    graduação: DESESPERO{" "}
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta25"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
+                    <Option value="3 - SEMPRE">3 - SEMPRE</Option>
+                  </Select>
+                </Stack>
+
+                <Stack>
+                  <FormLabel>
+                    26 - Avalie cada sentimento que você tem em relação à sua
+                    graduação: ANSIEDADE{" "}
+                  </FormLabel>
+                  <Select
+                    placeholder="Selecione uma resposta"
+                    name="resposta26"
+                    required
+                  >
+                    <Option value="1 - NUNCA ou RARAMENTE">
+                      1 - NUNCA ou RARAMENTE
+                    </Option>
+                    <Option value="2 - FREQUENTEMENTE">
+                      2 - FREQUENTEMENTE
+                    </Option>
                     <Option value="3 - SEMPRE">3 - SEMPRE</Option>
                   </Select>
                 </Stack>
@@ -325,10 +708,8 @@ export async function getServerSideProps({ req }) {
   let token = session?.accessToken || session?.user?.email || "";
 
   const user = await UsersModel.find({
-    "email": session?.user?.email,
+    email: session?.user?.email,
   });
-
-  console.log(user);
 
   return {
     props: {
