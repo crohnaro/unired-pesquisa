@@ -9,7 +9,7 @@ const get = async (req, res) => {
 };
 
 const post = async (req, res) => {
-  const { matricula, name, email, password, idade, genero, course } = req.body;
+  const { matricula, name, email, password, idade, genero, course, estadocivil, residecom, cpf } = req.body;
 
   await dbConnect();
   const passwordCrypto = await crypto(password);
@@ -20,6 +20,9 @@ const post = async (req, res) => {
     idade,
     genero,
     course, 
+    estadocivil,
+    residecom,
+    cpf,
     password: passwordCrypto,
   });
 
