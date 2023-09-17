@@ -1,5 +1,8 @@
 import * as React from "react"
 
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded"
+import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded"
+
 import { CssVarsProvider } from "@mui/joy/styles"
 import GlobalStyles from "@mui/joy/GlobalStyles"
 import CssBaseline from "@mui/joy/CssBaseline"
@@ -23,9 +26,8 @@ import { Formik } from "formik"
 
 import { initialValues, validationSchema } from "@/src/lib/formValueSignin"
 import theme from "@/src/theme/JoyTheme/theme";
-import { Alert } from "@mui/joy"
+import { Alert, IconButton } from "@mui/joy"
   
-
 
 const handleAuthentication = async (values) => {
   try {
@@ -57,7 +59,7 @@ export default function JoySignInSideTemplate() {
         }}
       />
       <Box
-        sx={{
+        sx={theme => ({
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -67,8 +69,11 @@ export default function JoySignInSideTemplate() {
           display: "flex",
           justifyContent: "flex-end",
           backdropFilter: "blur(4px)",
-          backgroundColor: "rgba(19 19 24 / 0.4)"
-        }}
+          backgroundColor: "rgba(255 255 255 / 0.6)",
+          [theme.getColorSchemeSelector("dark")]: {
+            backgroundColor: "rgba(19 19 24 / 0.4)"
+          }
+        })}
       >
         <Box
           sx={{
