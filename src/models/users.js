@@ -5,6 +5,18 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, 'O campo "matrícula" é obrigatório.'],
   },
+  cpf: {
+    type: Number,
+    required: [true, 'O campo "CPF" é obrigatório.'],
+  },
+  residecom: {
+    type: String,
+    required: [true, 'O campo "reside com:" é obrigatório.'],
+  },
+  estadocivil: {
+    type: String,
+    required: [true, 'O campo "estado civil" é obrigatório.'],
+  },
   name: {
     type: String,
     required: [true, 'O campo "nome" é obrigatório.'],
