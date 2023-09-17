@@ -44,7 +44,7 @@ const handleAuthentication = async (values) => {
 export default function JoySignInSideTemplate() {
   const router = useRouter();
   return (
-    <CssVarsProvider defaultMode="dark" disableTransitionOnChange theme={theme}>
+    <CssVarsProvider defaultMode="dark" theme={theme}>
       <CssBaseline />
       <GlobalStyles
         styles={{
@@ -57,7 +57,7 @@ export default function JoySignInSideTemplate() {
         }}
       />
       <Box
-        sx={theme => ({
+        sx={{
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -67,11 +67,8 @@ export default function JoySignInSideTemplate() {
           display: "flex",
           justifyContent: "flex-end",
           backdropFilter: "blur(4px)",
-          backgroundColor: "rgba(255 255 255 / 0.6)",
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundColor: "rgba(19 19 24 / 0.4)"
-          }
-        })}
+          backgroundColor: "rgba(19 19 24 / 0.4)"
+        }}
       >
         <Box
           sx={{
@@ -241,7 +238,7 @@ export default function JoySignInSideTemplate() {
         </Box>
       </Box>
       <Box
-        sx={theme => ({
+        sx={{
           height: "100%",
           position: "fixed",
           right: 0,
@@ -258,11 +255,7 @@ export default function JoySignInSideTemplate() {
           backgroundRepeat: "no-repeat",
           backgroundImage:
             `url(https://res.cloudinary.com/dljxq5wce/image/upload/v1692905708/imagemprincipal_bp3hfa.jpg)`,
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundImage:
-              "url(https://res.cloudinary.com/dljxq5wce/image/upload/v1692905708/imagemprincipal_bp3hfa.jpg)"
-          }
-        })}
+        }}
         
       />
     </CssVarsProvider>
