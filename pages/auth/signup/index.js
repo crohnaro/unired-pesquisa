@@ -3,6 +3,9 @@ import * as React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
+import PropTypes from 'prop-types';
+
+import { IMaskInput } from 'react-imask';
 
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
@@ -26,12 +29,31 @@ import useToasty from "../../../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
 
+const TextMaskAdapter = React.forwardRef(function TextMaskAdapter(props, ref) {
+  const { onChange, ...other } = props;
+  return (
+    <IMaskInput
+      {...other}
+      mask="000.000.000-00"
+      definitions={{
+        '#': /[1-9]/,
+      }}
+      inputRef={ref}
+      onAccept={(value) => onChange({ target: { name: props.name, value } })}
+      overwrite
+    />
+  );
+});
 
-
+TextMaskAdapter.propTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default function Signup() {
   const router = useRouter();
   const { setToasty } = useToasty();
+  const [value, setValue] = React.useState('(100) 000-0000');
 
   const handleFormSubmit = async (formJson) => {
     const response = await axios.post("/api/users", formJson);
@@ -171,6 +193,16 @@ export default function Signup() {
                 />
               </Stack>
               <Stack>
+                <FormLabel>CPF</FormLabel>
+                <Input
+                  name="cpf"
+                  value={value}
+                  onChange={(event) => setValue(event.target.value)}
+                  placeholder="Digite seu cpf"
+                  slotProps={{ input: { component: TextMaskAdapter } }}
+                />
+            </Stack>
+              <Stack>
                 <FormLabel>Email</FormLabel>
                 <Input
                   type="email"
@@ -200,6 +232,20 @@ export default function Signup() {
                   name="idade"
                 />
               </Stack>
+              
+              <Stack>
+                <FormLabel>Reside com: </FormLabel>
+                <Select
+                  placeholder="Selecione uma opção"
+                  name="residecom"
+                  required
+                >
+                  <Option value="Pais">Pais</Option>
+                  <Option value="Sozinho/a">Sozinho/a</Option>
+                  <Option value="Amigos">Amigos</Option>
+                  <Option value="Familia própria(esposo/a, filhos/as)">Familia própria(esposo/a, filhos/as)</Option>
+                </Select>
+              </Stack>
 
               <Stack>
                 <FormLabel>Genero</FormLabel>
@@ -212,6 +258,21 @@ export default function Signup() {
                   <Option value="Feminino">Feminino</Option>
                   <Option value="Não binário">Não binário</Option>
                   <Option value="Prefiro não declarar">Prefiro não declarar</Option>
+                </Select>
+              </Stack>
+
+              <Stack>
+                <FormLabel>Estado Civil </FormLabel>
+                <Select
+                  placeholder="Selecione uma opção"
+                  name="estadocivil"
+                  required
+                >
+                  <Option value="Solteiro/a">Solteiro/a</Option>
+                  <Option value="Casado/a">Casado/a</Option>
+                  <Option value="Separado/a">Separado/a</Option>
+                  <Option value="Viúvo/a">Viúvo/a</Option>
+                  <Option value="Outros">Outros</Option>
                 </Select>
               </Stack>
 
