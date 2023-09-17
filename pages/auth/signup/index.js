@@ -83,7 +83,7 @@ export default function Signup() {
         }}
       />
       <Box
-        sx={{
+        sx={theme => ({
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -93,8 +93,11 @@ export default function Signup() {
           display: "flex",
           justifyContent: "flex-end",
           backdropFilter: "blur(4px)",
-          backgroundColor: "rgba(19 19 24 / 0.4)",
-        }}
+          backgroundColor: "rgba(255 255 255 / 0.6)",
+          [theme.getColorSchemeSelector("dark")]: {
+            backgroundColor: "rgba(19 19 24 / 0.4)"
+          }
+        })}
       >
         <Box
           sx={{
