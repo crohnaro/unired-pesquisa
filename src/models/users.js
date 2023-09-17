@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
     required: [true, 'O campo "matrícula" é obrigatório.'],
   },
   cpf: {
-    type: Number,
+    type: String,
     required: [true, 'O campo "CPF" é obrigatório.'],
   },
   residecom: {
