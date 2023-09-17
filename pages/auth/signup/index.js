@@ -3,9 +3,9 @@ import * as React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { IMaskInput } from 'react-imask';
+import { IMaskInput } from "react-imask";
 
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
@@ -36,7 +36,7 @@ const TextMaskAdapter = React.forwardRef(function TextMaskAdapter(props, ref) {
       {...other}
       mask="000.000.000-00"
       definitions={{
-        '#': /[1-9]/,
+        "#": /[1-9]/,
       }}
       inputRef={ref}
       onAccept={(value) => onChange({ target: { name: props.name, value } })}
@@ -53,12 +53,12 @@ TextMaskAdapter.propTypes = {
 export default function Signup() {
   const router = useRouter();
   const { setToasty } = useToasty();
-  const [value, setValue] = React.useState('(100) 000-0000');
+  const [value, setValue] = React.useState("(100) 000-0000");
 
   const handleFormSubmit = async (formJson) => {
     const response = await axios.post("/api/users", formJson);
 
-    console.log(formJson)
+    console.log(formJson);
     if (response.data.success) {
       setToasty({
         open: true,
@@ -83,7 +83,7 @@ export default function Signup() {
         }}
       />
       <Box
-        sx={(theme) => ({
+        sx={{
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -93,11 +93,8 @@ export default function Signup() {
           display: "flex",
           justifyContent: "flex-end",
           backdropFilter: "blur(4px)",
-          backgroundColor: "rgba(255 255 255 / 0.6)",
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundColor: "rgba(19 19 24 / 0.4)",
-          },
-        })}
+          backgroundColor: "rgba(19 19 24 / 0.4)",
+        }}
       >
         <Box
           sx={{
@@ -129,12 +126,7 @@ export default function Signup() {
               }}
               href={"/"}
             >
-              <Image
-                alt="anunX Logo"
-                width={120}
-                priority
-                src={logowh}
-              />
+              <Image alt="anunX Logo" width={120} priority src={logowh} />
             </Link>
           </Box>
           <Box
@@ -174,23 +166,17 @@ export default function Signup() {
                 event.preventDefault();
                 const formData = new FormData(event.currentTarget);
                 const formJson = Object.fromEntries(formData.entries());
-                
-                handleFormSubmit(formJson)
+
+                handleFormSubmit(formJson);
               }}
             >
               <Stack>
                 <FormLabel>Matricula</FormLabel>
-                <Input
-                  type="matricula"
-                  name="matricula"
-                />
+                <Input type="matricula" name="matricula" />
               </Stack>
               <Stack>
                 <FormLabel>Nome</FormLabel>
-                <Input
-                  type="name"
-                  name="name"
-                />
+                <Input type="name" name="name" />
               </Stack>
               <Stack>
                 <FormLabel>CPF</FormLabel>
@@ -201,38 +187,26 @@ export default function Signup() {
                   placeholder="Digite seu cpf"
                   slotProps={{ input: { component: TextMaskAdapter } }}
                 />
-            </Stack>
+              </Stack>
               <Stack>
                 <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  name="email"
-                />
+                <Input type="email" name="email" />
               </Stack>
 
               <Stack>
                 <FormLabel>Senha</FormLabel>
-                <Input
-                  type="password"
-                  name="password"
-                />
+                <Input type="password" name="password" />
               </Stack>
               <Stack>
                 <FormLabel>Confirmar Senha</FormLabel>
-                <Input
-                  type="password"
-                  name="passwordConf"
-                />
+                <Input type="password" name="passwordConf" />
               </Stack>
 
               <Stack>
                 <FormLabel>Idade</FormLabel>
-                <Input
-                  type="number"
-                  name="idade"
-                />
+                <Input type="number" name="idade" />
               </Stack>
-              
+
               <Stack>
                 <FormLabel>Reside com: </FormLabel>
                 <Select
@@ -243,7 +217,9 @@ export default function Signup() {
                   <Option value="Pais">Pais</Option>
                   <Option value="Sozinho/a">Sozinho/a</Option>
                   <Option value="Amigos">Amigos</Option>
-                  <Option value="Familia própria(esposo/a, filhos/as)">Familia própria(esposo/a, filhos/as)</Option>
+                  <Option value="Familia própria(esposo/a, filhos/as)">
+                    Familia própria(esposo/a, filhos/as)
+                  </Option>
                 </Select>
               </Stack>
 
@@ -257,7 +233,9 @@ export default function Signup() {
                   <Option value="Masculino">Masculino</Option>
                   <Option value="Feminino">Feminino</Option>
                   <Option value="Não binário">Não binário</Option>
-                  <Option value="Prefiro não declarar">Prefiro não declarar</Option>
+                  <Option value="Prefiro não declarar">
+                    Prefiro não declarar
+                  </Option>
                 </Select>
               </Stack>
 
@@ -278,19 +256,19 @@ export default function Signup() {
 
               <Stack>
                 <FormLabel>Curso</FormLabel>
-                <Select
-                  placeholder="Selecione o curso"
-                  name="course"
-                  required
-                >
-                  <Option value="Sistemas de Informação">Sistemas de Informação</Option>
+                <Select placeholder="Selecione o curso" name="course" required>
+                  <Option value="Sistemas de Informação">
+                    Sistemas de Informação
+                  </Option>
                   <Option value="Enfermagem">Enfermagem</Option>
                   <Option value="Direito">Direito</Option>
                   <Option value="Eng. Civil">Eng. Civil</Option>
                   <Option value="Eng. Elétrica">Eng. Elétrica</Option>
                   <Option value="Eng. Mecânica">Eng. Mecânica</Option>
                   <Option value="Fonoaudiologia">Fonoaudiologia</Option>
-                  <Option value="Arquitetura e Urbanismo">Arquitetura e Urbanismo</Option>
+                  <Option value="Arquitetura e Urbanismo">
+                    Arquitetura e Urbanismo
+                  </Option>
                   <Option value="Fisioterapia">Fisioterapia</Option>
                   <Option value="Nutrição">Nutrição</Option>
                   <Option value="Psicologia">Psicologia</Option>
@@ -323,7 +301,7 @@ export default function Signup() {
         </Box>
       </Box>
       <Box
-        sx={(theme) => ({
+        sx={{
           height: "100%",
           position: "fixed",
           right: 0,
@@ -338,11 +316,7 @@ export default function Signup() {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundImage: `url(https://res.cloudinary.com/dljxq5wce/image/upload/v1692905708/imagemprincipal_bp3hfa.jpg)`,
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundImage:
-              "url(https://res.cloudinary.com/dljxq5wce/image/upload/v1692905708/imagemprincipal_bp3hfa.jpg)",
-          },
-        })}
+        }}
       />
     </CssVarsProvider>
   );
