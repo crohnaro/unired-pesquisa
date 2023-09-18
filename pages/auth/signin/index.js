@@ -3,7 +3,7 @@ import * as React from "react"
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded"
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded"
 
-import { CssVarsProvider } from "@mui/joy/styles"
+import { CssVarsProvider, useColorScheme } from "@mui/joy/styles"
 import GlobalStyles from "@mui/joy/GlobalStyles"
 import CssBaseline from "@mui/joy/CssBaseline"
 import Box from "@mui/joy/Box"
@@ -17,6 +17,7 @@ import Typography from "@mui/joy/Typography"
 import Image from "next/image";
 
 import logowh from '../../../public/logo white.png'
+import logoblk from '../../../public/logo black.png'
 import SendIcon from '@mui/icons-material/Send';
 
 import { signIn } from "next-auth/react";
@@ -43,7 +44,41 @@ const handleAuthentication = async (values) => {
   }
 };
 
+function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
+  const { mode, setMode } = useColorScheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
+  }
+  return (
+    <IconButton
+      id="toggle-mode"
+      size="sm"
+      variant="plain"
+      color="neutral"
+      aria-label="toggle light/dark mode"
+      {...props}
+      onClick={(event) => {
+        if (mode === "light") {
+          setMode("dark");
+          setLogoMode("dark")
+        } else {
+          setMode("light");
+          setLogoMode("light")
+        }
+        onClick?.(event);
+      }}
+    >
+      {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+    </IconButton>
+  );
+}
+
 export default function JoySignInSideTemplate() {
+  const [logoMode, setLogoMode] = React.useState("dark")
   const router = useRouter();
   return (
     <CssVarsProvider defaultMode="dark" theme={theme}>
@@ -105,8 +140,9 @@ export default function JoySignInSideTemplate() {
               }}
               href={"/"}
             >
-              <Image alt="logo" width={120} priority src={ logowh } />
+              <Image alt="anunX Logo" width={120} priority src={logoMode === "dark" ? logowh : logoblk} />
             </Link>
+            <ColorSchemeToggle logoMode={logoMode} setLogoMode={setLogoMode} />
           </Box>
           <Box
             component="main"
