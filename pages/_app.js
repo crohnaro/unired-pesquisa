@@ -31,8 +31,8 @@ export default function MyApp({
 }) {
   return (
     <SessionProvider session={session}>
-      <MaterialCssVarsProvider theme={{ [THEME_ID]: materialTheme }}>
-        <JoyCssVarsProvider theme={JoyTheme}>
+      <MaterialCssVarsProvider defaultMode="dark" theme={{ [THEME_ID]: materialTheme }}>
+        <JoyCssVarsProvider defaultMode="dark" theme={JoyTheme}>
           <ToastyProvider>
             <CssBaseline />
             {Component.requireAuth ? (
