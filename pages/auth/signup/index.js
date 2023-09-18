@@ -11,6 +11,8 @@ import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
 import Stack from "@mui/joy/Stack";
 import FormLabel, { formLabelClasses } from "@mui/joy/FormLabel";
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded"
+import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded"
 
 import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
@@ -20,6 +22,7 @@ import Option from "@mui/joy/Option";
 
 import Image from "next/image";
 import logowh from "../../../public/logo white.png";
+import logoblk from '../../../public/logo black.png'
 
 import { useRouter } from "next/router";
 
@@ -28,6 +31,7 @@ import axios from "axios";
 import useToasty from "../../../src/contexts/Toasty";
 
 import theme from "@/src/theme/JoyTheme/theme";
+import { IconButton } from "@mui/joy";
 
 const TextMaskAdapter = React.forwardRef(function TextMaskAdapter(props, ref) {
   const { onChange, ...other } = props;
@@ -50,7 +54,41 @@ TextMaskAdapter.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+function ColorSchemeToggle({ onClick, logoMode, setLogoMode, ...props }) {
+  const { mode, setMode } = useColorScheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return <IconButton size="sm" variant="plain" color="neutral" disabled />;
+  }
+  return (
+    <IconButton
+      id="toggle-mode"
+      size="sm"
+      variant="plain"
+      color="neutral"
+      aria-label="toggle light/dark mode"
+      {...props}
+      onClick={(event) => {
+        if (mode === "light") {
+          setMode("dark");
+          setLogoMode("dark")
+        } else {
+          setMode("light");
+          setLogoMode("light")
+        }
+        onClick?.(event);
+      }}
+    >
+      {mode === "light" ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+    </IconButton>
+  );
+}
+
 export default function Signup() {
+  const [logoMode, setLogoMode] = React.useState("dark")
   const router = useRouter();
   const { setToasty } = useToasty();
   const [value, setValue] = React.useState("(100) 000-0000");
@@ -83,7 +121,7 @@ export default function Signup() {
         }}
       />
       <Box
-        sx={theme => ({
+        sx={(theme) => ({
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -95,8 +133,8 @@ export default function Signup() {
           backdropFilter: "blur(4px)",
           backgroundColor: "rgba(255 255 255 / 0.6)",
           [theme.getColorSchemeSelector("dark")]: {
-            backgroundColor: "rgba(19 19 24 / 0.4)"
-          }
+            backgroundColor: "rgba(19 19 24 / 0.4)",
+          },
         })}
       >
         <Box
@@ -129,8 +167,9 @@ export default function Signup() {
               }}
               href={"/"}
             >
-              <Image alt="anunX Logo" width={120} priority src={logowh} />
+              <Image alt="anunX Logo" width={120} priority src={logoMode === "dark" ? logowh : logoblk} />
             </Link>
+            <ColorSchemeToggle logoMode={logoMode} setLogoMode={setLogoMode} />
           </Box>
           <Box
             component="main"
