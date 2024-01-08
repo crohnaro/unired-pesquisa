@@ -1,38 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# UniRed Pesquisa
 
-## Getting Started
+O UniRed Pesquisa é um projeto voltado para a retenção de alunos através da análise de respostas e dados coletados por meio de questionários. A plataforma visa oferecer insights valiosos sobre a experiência dos alunos e, com isso, contribuir para a melhoria contínua dos serviços educacionais.
 
-First, run the development server:
+## Objetivo
+
+O objetivo principal é coletar dados por meio de questionários para entender melhor as necessidades e preocupações dos alunos, permitindo à instituição tomar medidas proativas para melhorar a experiência educacional.
+
+## Tecnologias Utilizadas
+
+- **Next.js**: Framework utilizado para o desenvolvimento da aplicação web.
+- **MongoDB**: Banco de dados utilizado para armazenamento dos dados coletados.
+- **Node.js**: Utilizado para a lógica do servidor e processamento de dados.
+
+## Funcionalidades
+
+- Coleta de respostas de questionários para análise.
+- Armazenamento seguro e organizado das respostas no MongoDB.
+- Próximo Passo: Implementação da estrutura inicial da dashboard para análise dos dados coletados.
+
+## Instalação
+
+Para rodar o projeto localmente, siga os passos abaixo:
+
+1. Certifique-se de ter o Node.js instalado na sua máquina.
+2. Faça o clone deste repositório:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/seu-usuario/unired-pesquisa.git
 ```
+3. Acesse o diretório do projeto:
+```bash
+  cd UniRedPesquisa
+```
+4. Instale as dependências utilizando npm:
+```bash
+  npm install
+```
+## Executando o Projeto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Após a instalação das dependências, você pode rodar o projeto localmente com o seguinte comando:
+```bash
+  npm run dev
+```
+Isso iniciará o servidor de desenvolvimento. Acesse [http://localhost:3000](http://localhost:3000) no seu navegador para utilizar a aplicação.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Próximos Passos
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- [x] Coleta de respostas de questionários para análise.
+- [x] Armazenamento seguro e organizado das respostas no MongoDB.
+- [ ] Implementação da estrutura inicial da dashboard para análise dos dados coletados.
+- [ ] Análise e visualização dos dados coletados.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Contribuindo
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Sinta-se à vontade para contribuir com novos recursos, correções de bugs ou melhorias para o projeto. Basta seguir os passos abaixo:
 
-## Learn More
+1. Faça um fork deste repositório.
+2. Crie uma branch para a sua feature: `git checkout -b minha-feature`.
+3. Faça commit das suas alterações: `git commit -m 'Adicionando nova feature'`.
+4. Faça push para a branch: `git push origin minha-feature`.
+5. Abra um Pull Request.
 
-To learn more about Next.js, take a look at the following resources:
+## Autores
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Crohnaro](https://github.com/crohnaro)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Licença
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Este projeto está sob a licença [MIT](https://opensource.org/licenses/MIT).
