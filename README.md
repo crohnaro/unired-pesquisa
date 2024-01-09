@@ -6,6 +6,9 @@ O UniRed Pesquisa é um projeto voltado para a retenção de alunos através da 
 
 O objetivo principal é coletar dados por meio de questionários para entender melhor as necessidades e preocupações dos alunos, permitindo à instituição tomar medidas proativas para melhorar a experiência educacional.
 
+## Link do deploy!
+https://unired-pesquisa-b030ea9c8479.herokuapp.com/
+
 ## Tecnologias Utilizadas
 
 - **Next.js**: Framework utilizado para o desenvolvimento da aplicação web.
